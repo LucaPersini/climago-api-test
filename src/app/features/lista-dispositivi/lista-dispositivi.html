@@ -1,0 +1,122 @@
+<div class="vh-100 vw-100 d-flex justify-content-center align-items-center bg-light p-4">
+  <div class="col-md-11 col-12 border rounded h-100 p-md-5 p-3" style="background-color: white">
+    <p class="h1">Lista dispositivi</p>
+    <a [routerLink]="['/impianti']" class="link-opacity-100 link-opacity-75-hover">Torna a lista impianti</a>
+    <a (click)="apertoModalListaInterventi = !apertoModalListaInterventi" class="link-opacity-100 link-opacity-75-hover ms-3" role="button">Vedi lista interventi</a>
+    <div class="mt-5 table-responsive">
+      <table class="table table-striped text-nowrap">
+        <thead>
+          <tr>
+            <th class="text-center">Marca</th>
+            <th class="text-center">Modello</th>
+            <th class="text-center">Tipo macchina</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (dispositivo of listaDispositivi; track $index) {
+          <tr>
+            <td class="text-center">{{dispositivo.datiDispositivo.marca}}</td>
+            <td class="text-center">{{dispositivo.datiDispositivo.modello}}</td>
+            <td class="text-center">{{dispositivo.datiDispositivo.tipoMacchina}}</td>
+            <td class="text-center">
+              <a (click)="apriModalDettagliDispositvo(dispositivo)" role="button">Dettagli impianto</a>
+            </td>
+            <td class="text-center">Lista interventi</td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Modal dettagli dispositivo -->
+  @if (apertoModalDettagliDispositivo) {
+    <div class="position-fixed top-0 bottom-0 start-0 vh-100 vw-100 bg-opacity-25 bg-black d-flex justify-content-center align-content-center">
+      <div class="col-lg-6 col-9 h-50 m-auto rounded d-flex flex-column justify-content-center align-content-center bg-white pt-3 pb-3 ps-5 pe-5">
+        <div class="m-auto d-flex flex-row w-75 table-responsive">
+          <table class="table text-nowrap">
+            <tbody>
+              <tr>
+                <th class="text-start">Indirizzo:</th>
+                <th class="text-end">{{dispositivoSelezionato.indirizzo}}</th>
+              </tr>
+              <tr>
+                <th class="text-start">Marca:</th>
+                <th class="text-end">{{dispositivoSelezionato.datiDispositivo.marca}}</th>
+              </tr>
+              <tr>
+                <th class="text-start">Modello:</th>
+                <th class="text-end">{{dispositivoSelezionato.datiDispositivo.modello}}</th>
+              </tr>
+              <tr>
+                <th class="text-start">Matricola:</th>
+                <th class="text-end">{{dispositivoSelezionato.datiDispositivo.matricola}}</th>
+              </tr>
+              <tr>
+                <th class="text-start">Tipo macchina:</th>
+                <th class="text-end">{{dispositivoSelezionato.datiDispositivo.tipoMacchina}}</th>
+              </tr>
+              <tr>
+                <th class="text-start">Numero promozioni:</th>
+                <th class="text-end">{{dispositivoSelezionato.numeroPromozioni ?? "Non inserito"}}</th>
+              </tr>
+              <tr>
+                <th class="text-start">Prossimo appuntamento:</th>
+                <th class="text-end">{{dispositivoSelezionato.prossimoAppuntamento ?? "Non inserito"}}</th>
+              </tr>
+              <tr>
+                <th class="text-start">Scadenze anno in corso:</th>
+                <th class="text-end">{{dispositivoSelezionato.scadenzeAnnoInCorso ?? "Non inserito"}}</th>
+              </tr>
+              <tr>
+                <th class="text-start">Ultimo intervento effettuato:</th>
+                @if (dispositivoSelezionato.ultimoIntervento != null) {
+                  <th class="text-end">{{dispositivoSelezionato.ultimoIntervento.dataUltimoIntervento}}</th>
+                } @else {
+                  <th class="text-end">Nessun intervento effettuato</th>
+                }
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <button class="btn btn-primary col-6 col-md-3 m-auto" (click)="apertoModalDettagliDispositivo = !apertoModalDettagliDispositivo">Chiudi</button>
+      </div>
+    </div>
+  }
+  
+  <!-- Modal lista interventi -->
+  @if (apertoModalListaInterventi) {
+    <div class="position-fixed top-0 bottom-0 start-0 vh-100 vw-100 bg-opacity-25 bg-black d-flex justify-content-center align-content-center">
+      <div class="col-lg-6 col-9 h-50 m-auto rounded d-flex flex-column justify-content-center align-content-center bg-white pt-3 pb-3 ps-5 pe-5">
+        <div class="m-auto d-flex flex-column w-100 table-responsive">
+          <p class="h4 mb-4">Lista interventi</p>
+          <table class="table table-striped text-nowrap">
+            <thead>
+              <tr>
+                <th>Cliente</th>
+                <th>Data intervento</th>
+                <th>Tecnico responsabile</th>
+                <th>Commento</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (intervento of listaInterventi; track $index) {
+                <tr>
+                  <th class="fw-normal">{{ intervento.cliente }}</th>
+                  <th class="fw-normal">{{ intervento.dataIntervento }}</th>
+                  <th class="fw-normal">{{ intervento.tecnicoResponsabile }}</th>
+                  @if(intervento.comment != null) {
+                    <th class="fw-normal">{{ intervento.comment }}</th>
+                  } @else {
+                    <th class="fw-normal">Nessun commento</th>
+                  }
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+        <button class="btn btn-primary col-6 col-md-3 m-auto" (click)="apertoModalListaInterventi = !apertoModalListaInterventi">Chiudi</button>
+      </div>
+    </div>
+  }
+</div>
