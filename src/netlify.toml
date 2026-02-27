@@ -1,9 +1,0 @@
-[[redirects]]
-  from = "/api/*"
-  to = "https://dev-clima-go.it/api/:splat"
-  status = 200
-  force = true
-
-[build]
-  command = "ng build -c production"
-  publish = "dist/climago-api-test/browser"

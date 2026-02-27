@@ -46,6 +46,7 @@ export class Login {
         )
         .pipe(
           catchError((error) => {
+            console.log(error);
             this.errorOccurred = true;
             this.errorMsg = this.errorService.getErrorMsg(error);
             return EMPTY;
