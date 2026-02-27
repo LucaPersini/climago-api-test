@@ -1,7 +1,8 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { apiUrl } from '../../environment';
+import { API } from '../../endpoints';
+import { environment } from '../../environment';
 import { LoginResponse } from '../models/login-response.model';
 
 @Injectable({
@@ -16,7 +17,7 @@ export class ClientService {
       .set('username', email)
       .set('password', password);
 
-    return this.http.get(apiUrl.login, { headers: header });
+    return this.http.get(`${environment.baseUrl}${API.login}`, { headers: header });
   }
 
   public getListaImpianti() {
@@ -25,7 +26,7 @@ export class ClientService {
       `Bearer ${this.getAccessToken() as string}`,
     );
 
-    return this.http.get(apiUrl.ricercaImpianti, { headers: header });
+    return this.http.get(`${environment.baseUrl}${API.ricercaImpianti}`, { headers: header });
   }
 
   public getListaDispositivi(idGruppo: number) {
@@ -34,7 +35,7 @@ export class ClientService {
       `Bearer ${this.getAccessToken() as string}`,
     );
 
-    return this.http.get(`${apiUrl.listaDispositivi}${idGruppo}`, { headers: header });
+    return this.http.get(`${environment.baseUrl}${API.listaDispositivi}${idGruppo}`, { headers: header });
   }
 
   public getListaInterventi(idGruppo: number) {
@@ -43,7 +44,7 @@ export class ClientService {
       `Bearer ${this.getAccessToken() as string}`,
     );
 
-    return this.http.get(`${apiUrl.listaInterventi}${idGruppo}`, {headers: header});
+    return this.http.get(`${environment.baseUrl}${API.listaInterventi}${idGruppo}`, {headers: header});
   }
 
   public setAuthToken(response: LoginResponse) {

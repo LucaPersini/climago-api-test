@@ -50,7 +50,6 @@ export class ListaDispositivi {
         return EMPTY;
       }),
     ).subscribe((result) => {
-      console.log(result);
       this.listaInterventi = result as Intervento[];
       console.log('Lista interventi ricevuta')
       this.changeDetection.detectChanges();
