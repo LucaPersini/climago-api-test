@@ -26,10 +26,11 @@ export class ListaDispositivi {
   public apertoModalListaInterventi = false;
   public dispositivoSelezionato = this.listaDispositivi[0];
   public listaInterventi: Intervento[] = [];
+  public id = 0;
 
   constructor() {
-    const id = this.route.snapshot.params['idGruppo'];
-    const impianto = this.clientService.getListaDispositivi(id)
+    this.id = this.route.snapshot.params['idGruppo'];
+    const impianto = this.clientService.getListaDispositivi(this.id)
       .pipe(
       retry(3),
       catchError((error) => {
@@ -42,7 +43,7 @@ export class ListaDispositivi {
       this.changeDetection.detectChanges();
     });
 
-    const interventi = this.clientService.getListaInterventi(id)
+    const interventi = this.clientService.getListaInterventi(this.id)
       .pipe(
       retry(3),
       catchError((error) => {
