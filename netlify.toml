@@ -5,5 +5,5 @@
   force = true
 
 [build]
-  command = "ng build"
+  command = "ng build -c production"
   publish = "dist/climago-api-test/browser"
