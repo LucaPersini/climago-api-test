@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "https://dev-clima-go.it/api/$1"
+    }
+  ]
+}
